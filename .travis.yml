@@ -14,7 +14,7 @@ cache:
 env:
     global:
     - ANDROID_API=28
-    - EMULATOR_API=24
+    - EMULATOR_API=21
     - ANDROID_BUILD_TOOLS=28.0.3
     - ADB_INSTALL_TIMEOUT=5 # minutes
     - secure : "d3jwOW/BAm3418OY5IIa/n8hOgUl+uze4JYlQSSmySiNPnjA/i5aYq78qCBcgzkZAcp0QDcc96XO9LWVHXwaQSBPaapDHTKjFEBfzPsy8yL/CVZnIilC52rDPUsYubt+Ut8gnZnUT9rvXhdx55Xur1SN/Xkantc4njluu+j9SbYAWkrzeWuzfKDpNLkUzrHZ6phrIaSk0mXU14gBMKwOmhs5ujcQ94Rb7s6nYkFiZzYgcsEVn8vY1SvxZDZHcuqTjineQZJrqsb0Aqf4U0A4aLOu05GeHrM33XMhFBf+1s0uuqEuIQ3mJmxS+iAKULkgxWAoCHw4pxP/u5AmaLxGc7f40FO1AFC8gGLC6IuEpst6iFsH+S4MaZq9zSMSRjRbCd5z04ULIpwrzIpXmE1buwTrxbKziSEGw37IBKOli/TEya9IGP3olU8wr+i3Wry+qxiKwGOel45tSK4v6OCoEqLxldmaqFdWdMFJTmmn9ppU1X0nOe9U0v7AioOLknNfg749pzmTQHqWJgmpZNE//+FoCQ5cS5r2Kh+n8P1uLj0/r84kcL6VdIH9z9zO0Xe5vQ/EYN8p9pSJkV6F23DnI2VZzsBELA+nhP6sjgcOgZOGVLErJ243KzxKYaCgfqt323gw7ExnFohrhz4YXzZyXlzB8SiKO+qwm2hQlqAawaY="
@@ -49,7 +49,7 @@ before_install:
 - ./gradlew dependencies || true
 
 before_script:
-- echo no | android create avd --force -n test -t android-24 --abi google_apis/armeabi-v7a
+- echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
 - emulator -avd test -no-skin -no-audio -no-window &
 - android-wait-for-emulator
 - adb shell input keyevent 82 &
