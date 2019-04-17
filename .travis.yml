@@ -11,7 +11,7 @@ cache:
   - $HOME/.gradle/caches/
   - $HOME/.gradle/wrapper/
 
-  env:
+env:
     global:
     - ANDROID_API=28
     - EMULATOR_API=21
@@ -36,41 +36,41 @@ android:
   - android-sdk-license-.+
   - google-gdk-license-.+
 
-  before_install:
-  - openssl aes-256-cbc -K $encrypted_8fdb708573e7_key -iv $encrypted_8fdb708573e7_iv -in Key.enc -out Key -d
-  - mkdir "$ANDROID_HOME/licenses" || true
-  - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" >
-  "$ANDROID_HOME/licenses/android-sdk-license"
-  - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
-  - chmod +x gradlew
-  - ./gradlew dependencies || true
 
-  before_script:
-  - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
-  - emulator -avd test -no-skin -no-audio -no-window &
-  - android-wait-for-emulator
-  - adb shell input keyevent 82 &
+before_install:
+- openssl aes-256-cbc -K $encrypted_8fdb708573e7_key -iv $encrypted_8fdb708573e7_iv -in Key.enc -out Key -d
+- mkdir "$ANDROID_HOME/licenses" || true
+- echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" >"$ANDROID_HOME/licenses/android-sdk-license"
+- echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
+- chmod +x gradlew
+- ./gradlew dependencies || true
 
-  script:
-  - "./gradlew clean build connectedCheck -PdisablePreDex --stacktrace"
+before_script:
+- echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
+- emulator -avd test -no-skin -no-audio -no-window &
+- android-wait-for-emulator
+- adb shell input keyevent 82 &
 
-  before_deploy:
-  - cp $TRAVIS_BUILD_DIR/Key $HOME
-  - cd app/build/outputs/apk/
-  - jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore $HOME/Key -storepass $storepass -keypass $keypass app-release-unsigned.apk moka
+script:
+- "./gradlew clean build connectedCheck -PdisablePreDex --stacktrace"
 
-  # Verification
-  - jarsigner -verify app-release-unsigned.apk
-  - "${ANDROID_HOME}/build-tools/28.0.3/zipalign -v 4 app-release-unsigned.apk TravisExample.apk"
+before_deploy:
+- cp $TRAVIS_BUILD_DIR/Key $HOME
+- cd app/build/outputs/apk/
+- jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore $HOME/Key -storepass $storepass -keypass $keypass app-release-unsigned.apk moka
 
-  deploy:
-    provider: releases
-    file: TravisExample.apk
-    skip_cleanup: true
+# Verification
+- jarsigner -verify app-release-unsigned.apk
+- "${ANDROID_HOME}/build-tools/28.0.3/zipalign -v 4 app-release-unsigned.apk TravisExample.apk"
 
-    on:
-      repo: VieonyMoka/TravisUpload
-      tags: true
-      jdk: oraclejdk8
-    api_key:
-      secure: "hQqJPYMKmodAXdBva3Wy4Kw9fxbgZvoMuWrgqqonTSPASzNXmuLAdVGHCeZuNYM/LzeYcQ9awhyzLR8etHI80hAC/zwbjz2FHnRKh+Sm6IHhJIyEbYV3NZtjTSPNdInjvL79OaGGs4K7URIgW0Xke4/iEWSTykFcXKL6nrDt37E1TqEgtpFXQ1vI1rhoSqtGMMs6zwvanwvXBODP0DK4vl+LK5Ho9jgxn/iV2Uk9PMF3qgCKCND1+VUWveHLlEPVISQBd7k1cy7Dm5VtvPyZeN2xh8ONNXMYkDQwo33w6pa0w721EQ+9aiMoPOCHkuWIDlXFcYi3HXqQupfSA2uQbj4ysMs9CKC0f6e4OE8QbyoUtZAbLzfDHDuMArgOC4LBVN6u1mEETNnirDA5bM8+zhDHXr6JybjnH0C+kjAaeWbU18kYJmNcZSaNEtsiQRY6SY0LMaw4xqwqFIv+PWlPULBopsA58MmhGCxDkDZ2ZoLHGZ0sHm7tO1fMMo42dChzZhP0c6bCeTVJt9MRtIMQSQHger/UH+CfMkqreJqbOoA+q2drrDxd5lBcMN+mcO7XnVMa9FZ91so9lueVlFWDYnhPY92tcV8k5lKNx0EFjOgpstN8v3TwNRUm7dZtCYMtXhiSeuFC2zVb3dOm7vgr1qqPcHUt0CSpo7Z6SMf/klM="
+deploy:
+  provider: releases
+  file: TravisExample.apk
+  skip_cleanup: true
+
+  on:
+    repo: VieonyMoka/TravisUpload
+    tags: true
+    jdk: oraclejdk8
+  api_key:
+    secure: "hQqJPYMKmodAXdBva3Wy4Kw9fxbgZvoMuWrgqqonTSPASzNXmuLAdVGHCeZuNYM/LzeYcQ9awhyzLR8etHI80hAC/zwbjz2FHnRKh+Sm6IHhJIyEbYV3NZtjTSPNdInjvL79OaGGs4K7URIgW0Xke4/iEWSTykFcXKL6nrDt37E1TqEgtpFXQ1vI1rhoSqtGMMs6zwvanwvXBODP0DK4vl+LK5Ho9jgxn/iV2Uk9PMF3qgCKCND1+VUWveHLlEPVISQBd7k1cy7Dm5VtvPyZeN2xh8ONNXMYkDQwo33w6pa0w721EQ+9aiMoPOCHkuWIDlXFcYi3HXqQupfSA2uQbj4ysMs9CKC0f6e4OE8QbyoUtZAbLzfDHDuMArgOC4LBVN6u1mEETNnirDA5bM8+zhDHXr6JybjnH0C+kjAaeWbU18kYJmNcZSaNEtsiQRY6SY0LMaw4xqwqFIv+PWlPULBopsA58MmhGCxDkDZ2ZoLHGZ0sHm7tO1fMMo42dChzZhP0c6bCeTVJt9MRtIMQSQHger/UH+CfMkqreJqbOoA+q2drrDxd5lBcMN+mcO7XnVMa9FZ91so9lueVlFWDYnhPY92tcV8k5lKNx0EFjOgpstN8v3TwNRUm7dZtCYMtXhiSeuFC2zVb3dOm7vgr1qqPcHUt0CSpo7Z6SMf/klM="
