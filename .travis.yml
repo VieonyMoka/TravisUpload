@@ -14,8 +14,10 @@ cache:
 env:
     global:
     - ANDROID_API=28
-    - EMULATOR_API=26
+    - ANDROID_EMU_API_LEVEL=22
+    - ANDROID_ABI=armeabi-v7a
     - ANDROID_BUILD_TOOLS=28.0.3
+    - QEMU_AUDIO_DRV=none # Remove audio
     - ADB_INSTALL_TIMEOUT=5 # minutes
     - secure : "d3jwOW/BAm3418OY5IIa/n8hOgUl+uze4JYlQSSmySiNPnjA/i5aYq78qCBcgzkZAcp0QDcc96XO9LWVHXwaQSBPaapDHTKjFEBfzPsy8yL/CVZnIilC52rDPUsYubt+Ut8gnZnUT9rvXhdx55Xur1SN/Xkantc4njluu+j9SbYAWkrzeWuzfKDpNLkUzrHZ6phrIaSk0mXU14gBMKwOmhs5ujcQ94Rb7s6nYkFiZzYgcsEVn8vY1SvxZDZHcuqTjineQZJrqsb0Aqf4U0A4aLOu05GeHrM33XMhFBf+1s0uuqEuIQ3mJmxS+iAKULkgxWAoCHw4pxP/u5AmaLxGc7f40FO1AFC8gGLC6IuEpst6iFsH+S4MaZq9zSMSRjRbCd5z04ULIpwrzIpXmE1buwTrxbKziSEGw37IBKOli/TEya9IGP3olU8wr+i3Wry+qxiKwGOel45tSK4v6OCoEqLxldmaqFdWdMFJTmmn9ppU1X0nOe9U0v7AioOLknNfg749pzmTQHqWJgmpZNE//+FoCQ5cS5r2Kh+n8P1uLj0/r84kcL6VdIH9z9zO0Xe5vQ/EYN8p9pSJkV6F23DnI2VZzsBELA+nhP6sjgcOgZOGVLErJ243KzxKYaCgfqt323gw7ExnFohrhz4YXzZyXlzB8SiKO+qwm2hQlqAawaY="
     - secure : "c0GHchWSs3otzgo1JM8ooM5TxNw+kdslX86B17WSenRC7q2yhEUn8y7RqXgPUMtSE3JDuxIHIiXlRR6bf3A60Y2W4x+gj9j4Ztl3A1gipB3u06Tqh4A/LSp1VH5FKL1MOwf34CKVkZwvv+Rb1Arv7rPzhWrQN7u76fVd1/p8sXvbZOnA4Jdsb3Smf/F+6Yo9AAxxuazYA4ktQbZA5p3KYqA1INt9cFR4lqZd8tgcdKGrAZu/pNfqnVbqUdK1QTDq6I42JayjXr7l4NM9K/ys26okSBpq1itArIBL+gOlLX+nJXzL9tuZpQ3WCDvowurS6DAC1jp08Sr+SOs5F5gW1gik9/+aOws9fO1XufLP7tnd/bHTgSAKGdj0tCRFw5SwoSVERt/jy0WLmg/1t6a6YZ71heGO813emzbWireYyo5miJlsQIWqT8l8CA14ulj5XtbZDwV83UZ07x2KsKQ5Ja0pk4Npeln93tALjeQNanDIkyY1bMlBO0ZexqobRDKqd9rgATftLGx6MoaWo8rjRl3aE4U265+wp2IwBqqjwh3JUBLngNtugEn+Wpd73f6VP0CGQSl4uzhcMzo9SCey4c88bSzUVNkmEwGs+PC3V3BPeLq02z/qh+DtfQQQvKo4fHbNt5DM/XE3XwHzMZMqB65Zf3eN90zivPQN4yjPk3Y="
@@ -26,7 +28,7 @@ android:
   - build-tools-26.0.2
   - build-tools-$ANDROID_BUILD_TOOLS
   - android-$ANDROID_API
-  - android-$EMULATOR_API
+  - android-$ANDROID_EMU_API_LEVEL
   - extra-google-m2repository
   - extra-android-m2repository # for design library
   - addon-google_apis-google-19 # google play services
@@ -36,6 +38,8 @@ android:
   - addon-google_apis-google-$EMULATOR_API
   - extra-google-google_play_services
   - sys-img-x86-android-$EMULATOR_API
+  - extra-android-support
+  - sys-img-$ANDROID_ABI-google_apis-$ANDROID_EMU_API_LEVEL
 
   licenses:
   - android-sdk-preview-license-.+
@@ -52,8 +56,9 @@ before_install:
 - ./gradlew dependencies || true
 
 before_script:
-- echo no | android create avd --force -n test -t android-26 --abi armeabi-v7a -c 100M
-- emulator -avd test -no-skin -no-audio -no-window &
+- echo -e "Host github.com\n\tHostName github.com\n\tUser git\n\tIdentityFile ~/.ssh/id_travisci\n" >> ~/.ssh/config
+- echo no | android create avd --force -n test -t android-$ANDROID_EMU_API_LEVEL --abi google_apis/$ANDROID_ABI
+- emulator -avd test -no-window &
 - android-wait-for-emulator
 - adb shell input keyevent 82 &
 
