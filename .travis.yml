@@ -1,23 +1,26 @@
-# Tutorial here: https://medium.com/@harmittaa/travis-ci-android-example-357f6e632fc4
 language: android
 sudo: required
 jdk: oraclejdk8
 before_cache:
 - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
 - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-cache:
+cache: 
 directories:
-- $HOME/.gradle/caches/
-- $HOME/.gradle/wrapper/
+- "$HOME/.gradle/caches/"
+- "$HOME/.gradle/wrapper/"
 env:
+  global:
+  - secure: Y9dom63Vizi8g67IhgEm5t06dQLtPXnd2RrSu+rbowpeqmudmd8Ayjipl2gqDo5BNEI4AxVdw9LCoHzeiC7nfC9maCU1tL+Uf9cquW6P52kwRXMpe1tPQWxMGYaBtXC/b3nCUElJD/gL1huIkVWT+whe6YZRfc+75w+z51zLUzwccvCHxB1Of2rCdGTBEtfedXIzviZhdFHBVIuje2katGWMKuln/2Iw5pKvF1L1ZanFbTl6PfW7wmMXqIvbNnb0TuNsto8HC/u5+9Fj4Pv2c3xQ6o97DYcn31aZjZycYQ6yIky/uzC+/Q1hLvj9cKLFhKylBU85BwJQpVWOvwHYOBUpemzGQ+BX/HIXGnI1OVd2YHX61M4fhgeG2rzIg8DrORo0/3HZ4lFuMh5MOTXlTNp1s61ryYwJ0yj/ZWSlCIMpodpu5eXh6HcrmBkWd6zv67ifmLtjBdbl0mDF98+QMr05GUJuDQrTJBQyRvG8GCAZVyKa2TQLfopyajFXWxy1oLe9OfdTecXsqTpMh6lkQvYVqNunqbZh+tKT2LZOUMP2LnMAGg96O8acK6Jg1f+Fe8GCY4HH0jnqLloKQBLmY4qPJLAOGIPukPxhGH5hJ0vtb+ti0D7VYd7uzpa1qG/N5FZarSi5EfC3OOmGQa5wXyuhzrLpzzBSGQcJy3FBPuo=
+  - secure: X4Q5RZZXQrQ2O+nH5xXTaj51Gyoed27PWDL85rej/GytRtRiIVfKcUUCi58MtOKVmpWFQ2ifo52qcHecPGetxe3heuhR8f78Pxv/p0ZfoQgFQptEiLKjh9HzivYjzE2fBvcEX4+J70put5z+oG3gnk4Qtw0cM4vB32iydjTX7VUQp594Wt9VDwe9tSZEhgSPTU326jW9S3j2KmOJ4kSACZHq0r88K7yk3vg7lgofhQWK40bdqzG2mliTEJ6aDTxqy5Tq+foCl3Ml9HNxbzcF1GFjyjkyw5zJ26UiNuiCKWc6RUrDtK5MXJkxuo5iMYHitL5emO3Mn6ZAdLfJm6Hfwda+/BPcn84ACv9AIwDUfx/ODwT15aLuPLL8IPD532D0+30j4uWb3DQnhf/Z9kpd4g4S1NS776Tf9DlglNR37Nl/u1QCOiDK/BjiLn05bUWsEKzJm3jlYX1+GRR5mvuhmUpViW1ik5T7/36dvZ1NAJScRe2U2OSnqzQQoDMbo/KorekddaP85edkj/UxD3qC6rfoR+lEdhCKKZXzILmBsT6L3FYqeU+IcVkR3KZpcLiWzXSxD3excVSqxRvCfeEv/Nie+C9zEvI3NtcF3+Pok1IiF5s3kFUXi/40fsiwB8ePBcFrc/vk72wIeBQfICqJsEguLYLJhfVEH1/KHoxhibs=
+  - secure: c6IcIdEJWSY9p56yK2jGGtFcQOJAwGI3tSlGktdYIQqF83U/Gao4xCycxR6PpikFhWzRLcWTEFsb56XiSKdZiPL08uIr1IzccQWAV4eD42jrtKgmCDMfWOYAeR3OF27HdbfRKa6bVsmuT4iJ8b/lrekltuR5R/E/lVaIqXaQ7yKdVrZp57i9000CD1lgFLGZrfjYIXTQJfpy9QBLe/Luf4l0rR9v0l0FvabxWZl11qUj7w4L7CyPzHdYvKO6sjeMexEnoSpyF6Y0kLMqTZLcMZ0D28bF1loxOCgqKWh1Q//K/D2fcDIpy3/17mVkT7W+qXN8IshtUwc7NPSmBaQZMqHZjLIntiGzHdYPO0zvW8K7Db2kQRLqrzC5h5Rtg3tqJrksYDjvfEsWcgsJXEPf33U0SIwnQcHZqY7KdURIgyeLxJnHs+jXZGCfZa0RuhzazFIfujWTbesew1gf5dEhlRGZJ/nYAKiBgGgKr4XREAmm74D5phx+2RnaKyyXXX1BSRGojtmqd26pBCw+cCANQUB237jJdNvKH59k4bxNJEw+u2kJuXm81Z6/P1nkgYNXYV5XKGgZvfpJs9g1zdee8blyLtUIXOpGQovGRjja9IxaHUfN7KUKOMDjZzlPSBq2RjkfpWmqVnpJDVktH6SSYMnzBOrjHI9OYZdgTi5uIRY=
 global:
 - ANDROID_API=28
 - EMULATOR_API=21
 - ANDROID_BUILD_TOOLS=28.0.3
-- ADB_INSTALL_TIMEOUT=5 # minutes
-- secure: "EYLjKI4MrWVU986IBT94GnWkDLdDscMt3Y0tRa4DF8u0qd6y47yR7QXOLnmu9hJsbhEqmWZ4izqV/yItvRe+E2fXkikHlUhCl+xoW6TfhGn4pDbuR+c8MoRxhR6yKsP+GDHTeLOzrbUiIjnn1vdJlAxA/xftnMLuVx6PIhAI/4MQnuVvyff0UXY7ntIaCh/3RqY75fb17CRzDfd0+Iku1fPDHd5R5NArKBvcNDK18KQ15KYiMZQ5GU9JfFk7HDQT4lF80QQiIusguiVHTqvrdTTHQkM747uPBAsCh4/4837rjoSRQz7YvN0/Cxvd451k80fuypWWTnS3ScTfddOvZICSdlUHXiH8T9+D5pSP6n1f04tnvGa2C7oGLRFhkRwW2R7+uTY1NaRd62r75W75KDg1DczEIZ13639sB/CGl27aY0DSu7iSGahMpxplS/8vrN/hNmAqlyOR15i7F7fvrMahXZ10QvFVVkHFW3mB5ycG7kQM8dWOPoK1EJLI6HGrRKZX59NrUSmMHDT6ndvpzGo88nXKpMnp66PSMjHekBtz+k2cZYUfbaLsNeyDep6Fp3oia7SeX5L9oFnMCTSkZmOT9w+QPacNcQkACdVcpmDpIZGLEO77vhUWnFgOUmtGScgC0HiHfqItKxvRzW3gQ6dbJ01zQ+k87DEOo/QwNxE="
-- secure: "X5McwCD1T6HiIrBliOWjmOm+5vv7OvrLDrH+HiE4xAV8gWbTdt7xVKH5vmbiOZvyHPeeLGF4ugkbtp/FdMzZVUqCz3AI25UKUN2ZKmv+y+8kM3H0KMHplFtOMvGxe1jLoSTnlV86KkQaoHb9AUgrtBAisCuK7x/Qh4ZHkUZGO30cxvELQrPkrq1xx8HMNOixpCXL0XypFAs8geUsJnHTe6FkC2E16x2j0RPeB2ifVuQGE+8XHUaZLhh+wNTFJAamN9kHnX1wC6dY+unGgvkkY5C6lKYrJzAtIgE7cnzAn5u4zmyH5pAHxzctRHsF1GJLOM713qc/xkUDPUB9fddcoXZuBx8v/V2o8hI5qah2Z0RhdyhQT5pSbElEifMBql7XwUT/XVpijJubGVh4tcG5tIYo1A+R0FH9xernpuVoIShY1SFj5GmIXpWDe1d4H6glNfY8jteCCnnHZhrY6QeDh72cLAXuNKX6iHqoYQNLhb+WwiToK8Xte8pkt36BSteaH7zcB+wzsJriCPWU2DdLQqpBobKx/671vRo8z/J8eaRUjFT7DldwiseqMl4hHnBiLQmGY1xFk3grE8MLE2/gEdNN6iO9JCJITakvq94KOwIw6zNFBCSLoT1ghIutK/hC7F0wnUrtCRg/e02ymQovcfloK8QVMY3LCF0xla+pAOA="
-android:
+- ADB_INSTALL_TIMEOUT=5
+- secure: EYLjKI4MrWVU986IBT94GnWkDLdDscMt3Y0tRa4DF8u0qd6y47yR7QXOLnmu9hJsbhEqmWZ4izqV/yItvRe+E2fXkikHlUhCl+xoW6TfhGn4pDbuR+c8MoRxhR6yKsP+GDHTeLOzrbUiIjnn1vdJlAxA/xftnMLuVx6PIhAI/4MQnuVvyff0UXY7ntIaCh/3RqY75fb17CRzDfd0+Iku1fPDHd5R5NArKBvcNDK18KQ15KYiMZQ5GU9JfFk7HDQT4lF80QQiIusguiVHTqvrdTTHQkM747uPBAsCh4/4837rjoSRQz7YvN0/Cxvd451k80fuypWWTnS3ScTfddOvZICSdlUHXiH8T9+D5pSP6n1f04tnvGa2C7oGLRFhkRwW2R7+uTY1NaRd62r75W75KDg1DczEIZ13639sB/CGl27aY0DSu7iSGahMpxplS/8vrN/hNmAqlyOR15i7F7fvrMahXZ10QvFVVkHFW3mB5ycG7kQM8dWOPoK1EJLI6HGrRKZX59NrUSmMHDT6ndvpzGo88nXKpMnp66PSMjHekBtz+k2cZYUfbaLsNeyDep6Fp3oia7SeX5L9oFnMCTSkZmOT9w+QPacNcQkACdVcpmDpIZGLEO77vhUWnFgOUmtGScgC0HiHfqItKxvRzW3gQ6dbJ01zQ+k87DEOo/QwNxE=
+- secure: X5McwCD1T6HiIrBliOWjmOm+5vv7OvrLDrH+HiE4xAV8gWbTdt7xVKH5vmbiOZvyHPeeLGF4ugkbtp/FdMzZVUqCz3AI25UKUN2ZKmv+y+8kM3H0KMHplFtOMvGxe1jLoSTnlV86KkQaoHb9AUgrtBAisCuK7x/Qh4ZHkUZGO30cxvELQrPkrq1xx8HMNOixpCXL0XypFAs8geUsJnHTe6FkC2E16x2j0RPeB2ifVuQGE+8XHUaZLhh+wNTFJAamN9kHnX1wC6dY+unGgvkkY5C6lKYrJzAtIgE7cnzAn5u4zmyH5pAHxzctRHsF1GJLOM713qc/xkUDPUB9fddcoXZuBx8v/V2o8hI5qah2Z0RhdyhQT5pSbElEifMBql7XwUT/XVpijJubGVh4tcG5tIYo1A+R0FH9xernpuVoIShY1SFj5GmIXpWDe1d4H6glNfY8jteCCnnHZhrY6QeDh72cLAXuNKX6iHqoYQNLhb+WwiToK8Xte8pkt36BSteaH7zcB+wzsJriCPWU2DdLQqpBobKx/671vRo8z/J8eaRUjFT7DldwiseqMl4hHnBiLQmGY1xFk3grE8MLE2/gEdNN6iO9JCJITakvq94KOwIw6zNFBCSLoT1ghIutK/hC7F0wnUrtCRg/e02ymQovcfloK8QVMY3LCF0xla+pAOA=
+android: 
 components:
 - tools
 - platform-tools
@@ -25,8 +28,8 @@ components:
 - android-$ANDROID_API
 - android-$EMULATOR_API_LEVEL
 - extra-google-m2repository
-- extra-android-m2repository # for design library
-- addon-google_apis-google-19 # google play services
+- extra-android-m2repository
+- addon-google_apis-google-19
 - sys-img-armeabi-v7a-addon-google_apis-google-$ANDROID_API_LEVEL
 - sys-img-armeabi-v7a-addon-google_apis-google-$EMULATOR_API_LEVEL
 licenses:
@@ -34,13 +37,15 @@ licenses:
 - android-sdk-license-.+
 - google-gdk-license-.+
 before_install:
-- openssl aes-256-cbc -K $encrypted_c0801aa05af4_key -iv $encrypted_c0801aa05af4_iv -in Key.enc -out Key -d
+- openssl aes-256-cbc -K $encrypted_8fdb708573e7_key -iv $encrypted_8fdb708573e7_iv
+  -in Key.enc -out Key -d
+- openssl aes-256-cbc -K $encrypted_c0801aa05af4_key -iv $encrypted_c0801aa05af4_iv
+  -in Key.enc -out Key -d
 - mkdir "$ANDROID_HOME/licenses" || true
 - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
 - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
 - chmod +x gradlew
-- ./gradlew dependencies || true # DON'T ADD unless you are getting "Install missing components using SDK manager"
-#Source: https://medium.com/@oldergod/constraint-layout-and-circleci-travis-d50342696d2
+- "./gradlew dependencies || true"
 before_script:
 - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
 - emulator -avd test -no-skin -no-audio -no-window &
@@ -51,17 +56,16 @@ script:
 before_deploy:
 - cp $TRAVIS_BUILD_DIR/example_keystore.jks $HOME
 - cd app/build/outputs/apk/
-- jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore $HOME/Key -storepass $storepass -keypass $keypass app-release-unsigned.apk ExampleKeystoreAlias
-# Verification
+- jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore $HOME/Key -storepass
+  $storepass -keypass $keypass app-release-unsigned.apk ExampleKeystoreAlias
 - jarsigner -verify app-release-unsigned.apk
 - "${ANDROID_HOME}/build-tools/24.0.2/zipalign -v 4 app-release-unsigned.apk TravisExample.apk"
-deploy:
+deploy: 
 provider: releases
 file: TravisExample.apk
 skip_cleanup: true
-on:
+true: 
 repo: VieonyMoka / TravisUpload
 tags: true
-jdk: oraclejdk8
-api_key:
-secure: "klmZBeb9zWoh2mjN0yKDME+UktWtazRx1r2Phny9tjpvXfR2TGkV9kevFTTmgWInHkCQ8avRoLtT1Kibhh/C5r/69Y/CEA7yldm7VQC0U+EQiNFK4Fgt299Uk5rxd/HBted/lwH2A+2KgZ0dGyZAQXwTNHD1Se4XsUGLQ2xSRyv+E62xu7J8w0Gqc2sl7HtMt4v7UaRy2VTGweasDyJzgJ1JTgBOYE71xwZLRV406FE8rdlsRTEEDGUvHmKNPomd5JolVVBAZ3erP3lGyyEpI0BEZCo/kCw+YZv2162+E0ek8qJdnbfQjpEJ4EsRKBGgr5e+ATTi56J880lvnlvZgJi/0krNEWXQLliFk3z5x8md2+xox7k/EgsbczueSq0Ns6cIKgmkNn8TDMv17Mwb5gpcOTftvvsWf80tGOC/mDmmwbX7I3YzJJoVa6MpE6Qj1yaIk1WRGpnN96n9Uzm8CY9uSzzW1CN/wVM+VUlPBxL5bU9bf4zNT0UAEg82V0p61GViT10dbNRjBFRMD/djQMAsF09XHkyfFqevQVLuSpfM+RO7bk9Hqqm8xkpXLPbcY7zh+bvoTNv2vkFsOgu0V75w6hG/m3MNoYoj6YIqT7cT9tIaf7qs4/K041LaWULNz+kJ8Dd4eMKkv9bTaQ15B46I+DOLM1at/xkQTRxyEGY="
+api_key: 
+secure: klmZBeb9zWoh2mjN0yKDME+UktWtazRx1r2Phny9tjpvXfR2TGkV9kevFTTmgWInHkCQ8avRoLtT1Kibhh/C5r/69Y/CEA7yldm7VQC0U+EQiNFK4Fgt299Uk5rxd/HBted/lwH2A+2KgZ0dGyZAQXwTNHD1Se4XsUGLQ2xSRyv+E62xu7J8w0Gqc2sl7HtMt4v7UaRy2VTGweasDyJzgJ1JTgBOYE71xwZLRV406FE8rdlsRTEEDGUvHmKNPomd5JolVVBAZ3erP3lGyyEpI0BEZCo/kCw+YZv2162+E0ek8qJdnbfQjpEJ4EsRKBGgr5e+ATTi56J880lvnlvZgJi/0krNEWXQLliFk3z5x8md2+xox7k/EgsbczueSq0Ns6cIKgmkNn8TDMv17Mwb5gpcOTftvvsWf80tGOC/mDmmwbX7I3YzJJoVa6MpE6Qj1yaIk1WRGpnN96n9Uzm8CY9uSzzW1CN/wVM+VUlPBxL5bU9bf4zNT0UAEg82V0p61GViT10dbNRjBFRMD/djQMAsF09XHkyfFqevQVLuSpfM+RO7bk9Hqqm8xkpXLPbcY7zh+bvoTNv2vkFsOgu0V75w6hG/m3MNoYoj6YIqT7cT9tIaf7qs4/K041LaWULNz+kJ8Dd4eMKkv9bTaQ15B46I+DOLM1at/xkQTRxyEGY=
