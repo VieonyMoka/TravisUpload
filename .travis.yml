@@ -14,7 +14,7 @@ cache:
 env:
     global:
     - ANDROID_API=28
-    - ANDROID_EMU_API_LEVEL=26
+    - ANDROID_EMU_API_LEVEL=22
     - ANDROID_ABI=armeabi-v7a
     - ANDROID_BUILD_TOOLS=28.0.3
     - QEMU_AUDIO_DRV=none # Remove audio
@@ -63,7 +63,7 @@ before_script:
 - adb shell input keyevent 82 &
 
 script:
-- "./gradlew clean build connectedCheck -PdisablePreDex --stacktrace"
+- "./gradlew clean build connectedCheck --stacktrace"
 
 before_deploy:
 - cp $TRAVIS_BUILD_DIR/Key $HOME
